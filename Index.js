@@ -26,3 +26,4 @@ bot.on('message', async message => {
     message.channel.send("Mensagens apagadas com sucesso!")
 }
 })
+bot.login("TOKEN-DO-BOT")
