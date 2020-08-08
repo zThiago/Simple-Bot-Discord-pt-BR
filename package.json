@@ -1,7 +1,7 @@
 {
-  "name": "darkbot",
+  "name": "Simple Bot",
   "version": "1.0.0",
-  "description": "bot do darksilverbr",
+  "description": "Bot simples para aprendizado",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "moment": "^2.27.0",
-    "ms": "^2.1.2",
-    "quick.db": "7.0.0-b22",
-    "parse-ms": "^2.1.0"
+    "moment": "^2.27.0"
   }
 }
