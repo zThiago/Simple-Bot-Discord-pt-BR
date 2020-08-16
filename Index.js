@@ -89,5 +89,13 @@ message.delete() //Apaga a mensagem delete
 }
   })
   }
+ if(message.content.startsWith("ajuda")){
+ let helpmsg = new Discord.MessageEmbed()
+ .setTitle("Simple bot comandos")
+ .setDescription("`!ajuda` - Vê os comandos de ajuda\n`!banir <@usuario> [Motivo]` - Bani um usuario do servidor.\n`!limparchat [1-100]` - Limpa um chat do servidor.\n`!kick <@usuario> [Motivo]` - Expulsa um usuario do servidor\n`!reportar <@usuario> [Motivo]` - Reporta um usuario para os administradores do servidor.")
+ .setColor("#fff000")
+ .setFooter("Comandos do bot")
+ message.channel.send(helpmsg)
+ }
 })
 bot.login("TOKEN-DO-BOT")
