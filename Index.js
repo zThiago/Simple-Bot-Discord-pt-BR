@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const moment = require('moment');
+const config = require('./config.json');
 const bot = new Discord.Client({}); // Alguns parâmetros podem ser adicionados entre esses {}
 moment.locale('pt-BR');
 
@@ -98,4 +99,4 @@ message.delete() //Apaga a mensagem delete
  message.channel.send(helpmsg)
  }
 })
-bot.login("TOKEN-DO-BOT")
+bot.login(config.token)
