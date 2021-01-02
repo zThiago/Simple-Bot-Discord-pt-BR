@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const moment = require('moment');
 const config = require('./config.json');
 const bot = new Discord.Client({}); // Alguns parâmetros podem ser adicionados entre esses {}
+const comandos = new Set();
 moment.locale('pt-BR');
 
 //Quando o bot ligar
@@ -18,6 +19,8 @@ bot.on('message', async message => {
    let prefix = "!"; // Defini a prefix do bot aqui
    let args = message.content.split(" ").slice(1);
    
+   
+   // Comando de limparchat
    if(message.content.startsWith(prefix+"limparchat")){
     if(!message.member.hasPermission("MANAGE_GUILDS")) return message.channel.send("Sem permissão! você precisa da permissão `Manage_Guilds`");
     message.delete();
@@ -26,6 +29,7 @@ bot.on('message', async message => {
     message.channel.bulkDelete(apagar)
     message.channel.send("Mensagens apagadas com sucesso!")
 }
+   // Comando de reportar
    if(message.content.startsWith(prefix+"reportar")){
      let usuario = message.mentions.members.first(); //Pegar um usuario mencionado na mensagem
   if(!usuario) return message.channel.send("**Você precisa informar um usuario para reportar.**") // Caso a mensagem não contenha o usuario reportado
@@ -50,6 +54,7 @@ bot.on('message', async message => {
 message.delete() //Apaga a mensagem delete
   }
    
+   // Comando de Banir
   if(message.content.startsWith(prefix+"banir")){
      //banir @usuario [Motivo]
      // Precisa do moment!
@@ -90,6 +95,7 @@ message.delete() //Apaga a mensagem delete
 }
   })
   }
+   // Comando de Ajuda
  if(message.content.startsWith("ajuda")){
  let helpmsg = new Discord.MessageEmbed()
  .setTitle("Simple bot comandos")
@@ -99,4 +105,5 @@ message.delete() //Apaga a mensagem delete
  message.channel.send(helpmsg)
  }
 })
+
 bot.login(config.token)
