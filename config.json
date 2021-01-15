@@ -1,3 +1,4 @@
 {
-  "token" : "TOKEN DO SEU BOT"
+  "token" : "TOKEN DO SEU BOT",
+  "prefix" : "!"
 }
