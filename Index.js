@@ -1,34 +1,49 @@
-const Discord = require('discord.js');
-const moment = require('moment');
-const config = require('./config.json');
+const Discord = require('discord.js'); // puxando a biblioteca discord.js
+const moment = require('moment'); // utiizando a biblioteca moment para a formatação de tempo
+const config = require('./config.json'); // definindo a config para futuros usos de informações nela contida.
 const bot = new Discord.Client({}); // Alguns parâmetros podem ser adicionados entre esses {}
-const comandos = new Set();
-moment.locale('pt-BR');
+const comandos = new Set(); // criando um novo set, ele irá armazenar informações, não será usada nesse primeiro momento.
+moment.locale('pt-BR'); // definindo o local de formatação do tempo, para ficar traduzido
 
 //Quando o bot ligar
 bot.on('ready', message => {
-console.log("Olá Mundo!");
-console.log("Estou online");
-bot.user.setActivity({name: "Estou online!", type: "PLAYING"});
+console.log("Olá Mundo!"); // irá informar no console 
+console.log("Estou online"); // outro texto que sera logado no console
+bot.user.setActivity({name: "Estou online!", type: "PLAYING"}); // alterando a atividade do bot para jogando com o seguinte texto: "Estou online!"
 // Você pode alterar o valor do `name` e o type
 })
 
 // Evento de receber mensagem Servidor Canal/DM
 bot.on('message', async message => {
-   if(message.author.bot) return;
-   let prefix = "!"; // Defini a prefix do bot aqui
-   let args = message.content.split(" ").slice(1);
+   if(message.author.bot) return; // Caso o autor da mensagem seja um bot, ele irá continuar a ler o codigo, ou seja, ele não vai responder.
+   let prefix = config.prefix; // Defini a prefix do bot aqui, puxando da config, verifique a config e você verá a prefix lá.
+   let args = message.content.split(" ").slice(1); // definindo que args e o conteudo da mensagem separada por espaçamento e que será apenas da segunda palavra, pois a se trata do comando, e caso seja o comando de enviar mensagem por exemplo ele irá enviar o comando também, segue o exemplo abaixo:
+   // split(" ") => a mensagem será separada por espaçamento, assim caso a mensagem seja: Bom dia pessoal!
+   // será lido:
+   // args[0] = Bom
+   // args[1] = dia
+   // args[2] = pessoal!
+   // na programação javascript, tudo tem inicio a partir do 0
+   // Sem o slice(1)
+   // Comando de falar: Usuario#0101 > !falar Ola, estou usando o comando de falar.
+   // resposta do bot: !falar Ola, estou usando o comando de falar.
+   // Com o slice(1)
+   // Comando de falar: Usuario#0101 > !falar Ola, estou usando o comando de falar.
+   // resposta do bot: Ola, estou usando o comando de falar.
+   
    
    
    // Comando de limparchat
-   if(message.content.startsWith(prefix+"limparchat")){
+   if(message.content.startsWith(prefix+"limparchat")){ // verificando se a mensagem e: !limparchat caso a prefix seja !
+      // ele verifica se quem executou o comando tem permissão para gerenciar o servidor, caso não possua a permissão será retornado uma mensagem e irá parar o codigo
     if(!message.member.hasPermission("MANAGE_GUILDS")) return message.channel.send("Sem permissão! você precisa da permissão `Manage_Guilds`");
-    message.delete();
-    let apagar = args[0];
+    message.delete(); // apaga a mensagem que foi enviada
+    let apagar = args[0]; // defini que o args[0] vai ser chamado pagar
+   // verificando se apagar não existe ou se apagar e menor que 1 ou se apagar e maior que 100, caso isso seja verdadeiro ele irá retornar uma mensagem abaixo entre ""
     if(!apagar || apagar < 1 || apagar > 100) return message.channel.send("Informe um valor de 1 a 100");
-    message.channel.bulkDelete(apagar)
-    message.channel.send("Mensagens apagadas com sucesso!")
-}
+    message.channel.bulkDelete(apagar) // apagando a quantidade de mensagens informada no apagar, lembrando que precisa ser um numero de 1 - 100
+    message.channel.send("Mensagens apagadas com sucesso!") // enviando uma mensagem no canal
+} // fim do comando de limpar chat
    // Comando de reportar
    if(message.content.startsWith(prefix+"reportar")){
      let usuario = message.mentions.members.first(); //Pegar um usuario mencionado na mensagem
@@ -97,13 +112,13 @@ message.delete() //Apaga a mensagem delete
   }
    // Comando de Ajuda
  if(message.content.startsWith("ajuda")){
- let helpmsg = new Discord.MessageEmbed()
+ let helpmsg = new Discord.MessageEmbed() // cria um embed, a seguir o link explicando tudo sobre uma embed: https://discordjs.guide/popular-topics/embeds.html
  .setTitle("Simple bot comandos")
  .setDescription("`!ajuda` - Vê os comandos de ajuda\n`!banir <@usuario> [Motivo]` - Bani um usuario do servidor.\n`!limparchat [1-100]` - Limpa um chat do servidor.\n`!kick <@usuario> [Motivo]` - Expulsa um usuario do servidor\n`!reportar <@usuario> [Motivo]` - Reporta um usuario para os administradores do servidor.")
  .setColor("#fff000")
  .setFooter("Comandos do bot")
- message.channel.send(helpmsg)
+ message.channel.send(helpmsg) // envia a embed no canal
  }
 })
-
+// faz o login do bot através do token presente na config.
 bot.login(config.token)
