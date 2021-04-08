@@ -36,7 +36,7 @@ bot.on('message', async message => {
    // Comando de limparchat
    if(message.content.startsWith(prefix+"limparchat")){ // verificando se a mensagem e: !limparchat caso a prefix seja !
       // ele verifica se quem executou o comando tem permissão para gerenciar o servidor, caso não possua a permissão será retornado uma mensagem e irá parar o codigo
-    if(!message.member.hasPermission("MANAGE_GUILDS")) return message.channel.send("Sem permissão! você precisa da permissão `Manage_Guilds`");
+    if(!message.member.permissions.has("MANAGE_GUILDS")) return message.channel.send("Sem permissão! você precisa da permissão `Manage_Guilds`");
     message.delete(); // apaga a mensagem que foi enviada
     let apagar = args[0]; // defini que o args[0] vai ser chamado pagar
    // verificando se apagar não existe ou se apagar e menor que 1 ou se apagar e maior que 100, caso isso seja verdadeiro ele irá retornar uma mensagem abaixo entre ""
@@ -121,4 +121,4 @@ message.delete() //Apaga a mensagem delete
  }
 })
 // faz o login do bot através do token presente na config.
-bot.login(config.token)
+bot.login(config.token).catch(erro => {console.log("Não foi possivel logar o bot: " + erro)})
