@@ -1,7 +1,7 @@
 const Discord = require('discord.js'); // puxando a biblioteca discord.js
 const moment = require('moment'); // utiizando a biblioteca moment para a formatação de tempo
 const config = require('./config.json'); // definindo a config para futuros usos de informações nela contida.
-const bot = new Discord.Client({}); // Alguns parâmetros podem ser adicionados entre esses {}
+const bot = new Discord.Client({intents: ["GUILD_MESSAGES", "GUILD_MEMBERS"]}); // Alguns parâmetros podem ser adicionados entre esses {}
 const comandos = new Set(); // criando um novo set, ele irá armazenar informações, não será usada nesse primeiro momento.
 moment.locale('pt-BR'); // definindo o local de formatação do tempo, para ficar traduzido
 
@@ -14,7 +14,7 @@ bot.user.setActivity({name: "Estou online!", type: "PLAYING"}); // alterando a a
 })
 
 // Evento de receber mensagem Servidor Canal/DM
-bot.on('message', async message => {
+bot.on('messageCreate', async message => {
    if(message.author.bot) return; // Caso o autor da mensagem seja um bot, ele irá continuar a ler o codigo, ou seja, ele não vai responder.
    let prefix = config.prefix; // Defini a prefix do bot aqui, puxando da config, verifique a config e você verá a prefix lá.
    let args = message.content.split(" ").slice(1); // definindo que args e o conteudo da mensagem separada por espaçamento e que será apenas da segunda palavra, pois a se trata do comando, e caso seja o comando de enviar mensagem por exemplo ele irá enviar o comando também, segue o exemplo abaixo:
@@ -63,7 +63,7 @@ bot.on('message', async message => {
   .addField("Usuario reportado:", usuario.user.tag)
   .addField("Motivo do Reporte:", motivo)
   .addField("Quando reportou:", moment(message.createdAt).format('LLLL'))
-  .setFooter("ID do reportado: " + usuario.id)
+  .setFooter({text: "ID do reportado: " + usuario.id})
   canal.send(reportemsg) // Enviando o reporte para o canal
   message.channel.send("**Seu reporte foi concluido.**").then(msg => msg.delete({timeout: 10000})) // Avisando para o usuario que o reporte foi feito, essa mensagem será apagada em 10 segundos.
 message.delete() //Apaga a mensagem delete
@@ -97,7 +97,7 @@ message.delete() //Apaga a mensagem delete
       .addField("Usuario punido:", usuario)
       .addField("Motivo:", motivo)
       .addField("Quando ocorreu:", moment(message.createdAt).format('LLLL'))
-      .setFooter("Banimento")
+      .setFooter({text: "Banimento"})
       canal.send(banmsg)
       message.channel.send("<@"+message.author.id + "> usuario banido com sucesso.")
      }catch(erro){
@@ -116,7 +116,7 @@ message.delete() //Apaga a mensagem delete
  .setTitle("Simple bot comandos")
  .setDescription("`!ajuda` - Vê os comandos de ajuda\n`!banir <@usuario> [Motivo]` - Bani um usuario do servidor.\n`!limparchat [1-100]` - Limpa um chat do servidor.\n`!kick <@usuario> [Motivo]` - Expulsa um usuario do servidor\n`!reportar <@usuario> [Motivo]` - Reporta um usuario para os administradores do servidor.")
  .setColor("#fff000")
- .setFooter("Comandos do bot")
+ .setFooter({text: "Comandos do bot"})
  message.channel.send(helpmsg) // envia a embed no canal
  }
 })

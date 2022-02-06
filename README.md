@@ -9,6 +9,8 @@ Utiliza:
 - node
 - discord.js v13
 - moment
+# Aviso
+ É necessário ativar PRESENCE INTENT na configuração de seu bot em Discord Developer Portal.
 
 # LIÇENÇA
   O uso e publico, sua distribuição e permitida desde que não seja imposto quaisquer valores em cima de sua distribuição.
