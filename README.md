@@ -7,7 +7,7 @@ Esse bot está em um nivel iniciante,para pessoas que estão começando agora os
 # Informações
 Utiliza: 
 - node
-- discord.js v12
+- discord.js v13
 - moment
 
 # LIÇENÇA
